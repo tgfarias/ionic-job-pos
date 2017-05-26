@@ -1,0 +1,66 @@
+<!--
+  Generated template for the TarefasAdd page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{tarefa.titulo != undefined ? tarefa.titulo : "Minha Tarefa"}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+ <form [formGroup]="tarefaForm">
+ 	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label floating>Titulo</ion-label>
+					<ion-input formControlName="titulo" name="titulo" [(ngModel)]="tarefa.titulo"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row *ngIf="!tarefaForm.controls.titulo.valid">
+        	<ion-col>
+          		<span *ngIf="tarefaForm.controls.titulo.errors.required">
+            		O titulo da tarefa é obrigatorio.
+          		</span>
+          		<span *ngIf="tarefaForm.controls.titulo.errors.minlength">
+            		O titulo da tarefa deve conter no minimo 5 caracteres
+          		</span>
+        	</ion-col>
+      	</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label floating>Descrição</ion-label>
+					<ion-input formControlName="descricao" name="descricao" [(ngModel)]="tarefa.descricao"></ion-input>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-label floating>Status</ion-label>
+					<ion-select formControlName="estadoTarefa" name="state" [(ngModel)]="tarefa.state">
+						<ion-option *ngFor="let state of lovProvider.getTarefaStates()" [value]="state">
+							{{getEstadoValue(state)}}
+						</ion-option>
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<button ion-button full clear (click)="salvarTarefa()"[disabled]="tarefaForm.invalid">
+					Salvar tarefa
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+ </form>
+</ion-content>
